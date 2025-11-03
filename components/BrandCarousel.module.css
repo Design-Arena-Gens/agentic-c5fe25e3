@@ -1,0 +1,344 @@
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+  background: var(--carousel-bg);
+  border-radius: 12px;
+  padding: 2rem 0;
+  overflow: hidden;
+}
+
+.scrollContainer {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0 3rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.brandCard {
+  position: relative;
+  min-width: 250px;
+  height: 150px;
+  background: var(--brand-card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--brand-card-shadow);
+  cursor: pointer;
+  transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  outline: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.brandCard:hover,
+.brandCard:focus-visible {
+  transform: scale(var(--brand-hover-scale)) translateZ(0);
+  box-shadow: var(--brand-card-hover-shadow);
+  z-index: 10;
+}
+
+.brandCard:focus-visible {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+.logoContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.logoPlaceholder {
+  width: 200px;
+  height: 80px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.hoverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--brand-hover-overlay);
+  opacity: 0;
+  transition: opacity var(--transition-speed) ease;
+  pointer-events: none;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+.brandCard:hover .hoverOverlay {
+  opacity: 1;
+}
+
+.description {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(51, 51, 51, 0.98);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0 0 12px 12px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.description.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.description h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.description p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.arrowButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--carousel-arrow-bg);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all var(--transition-speed) ease;
+  color: var(--carousel-arrow-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
+.arrowButton:hover:not(:disabled),
+.arrowButton:focus-visible {
+  background: var(--carousel-arrow-bg-hover);
+  color: var(--carousel-arrow-hover-color);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.arrowButton:focus-visible {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+.arrowButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+
+.arrowButton.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.leftArrow {
+  left: 1rem;
+}
+
+.rightArrow {
+  right: 1rem;
+}
+
+.pausedIndicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  z-index: 50;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .brandCard {
+    min-width: 220px;
+    height: 130px;
+  }
+
+  .scrollContainer {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .brandCard {
+    min-width: 180px;
+    height: 110px;
+    padding: 1rem;
+  }
+
+  .scrollContainer {
+    gap: 1rem;
+    padding: 0 2.5rem;
+  }
+
+  .arrowButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .leftArrow {
+    left: 0.5rem;
+  }
+
+  .rightArrow {
+    right: 0.5rem;
+  }
+
+  .description h3 {
+    font-size: 1rem;
+  }
+
+  .description p {
+    font-size: 0.85rem;
+  }
+
+  .carouselWrapper {
+    padding: 1.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .brandCard {
+    min-width: 150px;
+    height: 100px;
+    padding: 0.75rem;
+  }
+
+  .scrollContainer {
+    gap: 0.75rem;
+    padding: 0 2rem;
+  }
+
+  .arrowButton {
+    width: 36px;
+    height: 36px;
+  }
+
+  .arrowButton svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .description {
+    padding: 1rem;
+  }
+
+  .pausedIndicator {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .brandCard:active {
+    transform: scale(0.98) translateZ(0);
+  }
+
+  .arrowButton:active:not(:disabled) {
+    transform: translateY(-50%) scale(0.95);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .brandCard {
+    border: 2px solid currentColor;
+  }
+
+  .arrowButton {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .scrollContainer {
+    scroll-behavior: auto;
+  }
+
+  .brandCard,
+  .arrowButton,
+  .description,
+  .hoverOverlay,
+  .logo {
+    transition: none;
+  }
+
+  .logoPlaceholder {
+    animation: none;
+  }
+}
